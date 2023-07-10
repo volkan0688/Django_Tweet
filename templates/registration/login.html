@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block content %}
+
+<h1 class="container" style="width: 20%;">Login Page</h1>
+<br>
+<div class="container">
+    {% if form.errors %}
+        <p>Kullanıcı adınız veya parolanız eşleşmiyor. Lütfen tekrar deneyiniz.</p>
+    {% endif %}
+
+
+    {% if user.is_authenticated %}
+        <h2 style="padding: 10px;">Welcome {{user.username}}</h2>
+    {% else %}
+        <form method="POST" action="{% url 'login' %}">
+            <div class="container" style="border: 4px solid rgb(237, 109, 100); padding: 8px; width: 50%;">
+
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                {{field.label_tag}}
+                {{field}}
+            </div>
+            {% endfor %}
+        <button type="submit" class="btn btn-danger">Login</button>
+    </div>
+        </form>
+    
+    {% endif %}
+</div>
+
+{% endblock %}
